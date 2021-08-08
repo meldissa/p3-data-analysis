@@ -1,6 +1,7 @@
 import gspread
 from google.oauth2.service_account import Credentials
 import pandas as pd
+import matplotlib.pyplot as plt
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -21,4 +22,12 @@ headers = data.pop(0)
 
 df = pd.DataFrame(data, columns=headers)
 print(df.head())
+
+print(df['2010 [YR2010]'].value_counts())
+
+df = df.astype(float)
+
+plt.plot()
+
+plt.show()
 
