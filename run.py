@@ -28,7 +28,9 @@ df_float = df.astype({
     'GDP per capita %': 'float'
 })
 
-df_float.plot(kind='bar', x='Type', y='GDP %')
+# df_float.plot(x='Type', y='GDP %' and 'GDP per capita %')
+
+df_float.plot('Type', ['GDP %', 'GDP per capita %'], kind='bar')
 
 plt.show()
 
