@@ -23,9 +23,12 @@ headers = data.pop(0)
 df = pd.DataFrame(data, columns=headers)
 print(df.head())
 
-df_float = df.astype(float)
+df_float = df.astype({
+    'GDP %': 'float',
+    'GDP per capita %': 'float'
+})
 
-df_float.plot()
+df_float.plot(kind='bar', x='Type', y='GDP %')
 
 plt.show()
 
