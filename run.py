@@ -23,11 +23,11 @@ headers = data.pop(0)
 df = pd.DataFrame(data, columns=headers)
 print(df.head())
 
-print(df['2010 [YR2010]'].value_counts())
+df_float = df.astype(float)
 
-df = df.astype(float)
-
-plt.plot()
+df_float.plot()
 
 plt.show()
+
+plt.savefig('fig.png')
 
