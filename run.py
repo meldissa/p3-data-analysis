@@ -50,7 +50,7 @@ def select_y_plot():
     while True:
         print("Please enter the column name for the y-axis plot.")
         print("Column name should be exactly the same as from the data sheet.")
-        print("To enter multiple columns for the plot, separate this by commas.")
+        print("To enter multiple columns, separate these by commas.")
         print("Example: GDP %,GDP per capita %\n")
 
         y_plot_str = input("Enter y-plot column here: \n")
@@ -64,10 +64,6 @@ def select_y_plot():
     # print(y_plot_column)
 
     return y_plot_column
-
-    # data.plot('Type', ['GDP %', 'GDP per capita %'], kind='bar')
-    # plt.show()
-    # plt.savefig('fig.png')
 
 
 def validate_y_plot(values):
@@ -117,12 +113,7 @@ def select_plot_type():
 
 def validate_plot_type(values):
     """
-    List defined of correct column names as per data sheet.
-    Variable defined to check if input from user list matches
-    to the correct values list.
-    Inside the try, checks if input from user is valid.
-    Raises ValueError if input does not match to the column name
-    from data sheet or if any other invalid input is entered.
+    Validate plot type
     """
     correct_type = ['bar', 'scatter', 'pie', 'line']
     try:
@@ -137,6 +128,15 @@ def validate_plot_type(values):
     return True
 
 
+def plot_output(data, values, plot):
+    """
+    Plot output as per user input.
+    """
+    data.plot('Type', values, kind=plot)
+    plt.show()
+    plt.savefig('fig.png')
+
+
 def main():
     """
     Run all program functions
@@ -146,6 +146,7 @@ def main():
     data_frame = create_data_frame(all_data)
     y_plot = select_y_plot()
     plot_type = select_plot_type()
+    plot_output(data_frame, y_plot, plot_type)
 
 
 main()
