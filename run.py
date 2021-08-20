@@ -15,6 +15,28 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('python_project_data')
 
 
+def start():
+    """
+    User provided with introduction and input to start calculation.
+    Try has if statement to check if user input is valid.
+    The except captures any incorrect input the user entered.
+    """
+    print("Welcome to the Economics Data Analysis Tool\n")
+    
+    while True:
+        print("Press Y to start\n")
+
+        start_str = input("Enter here: \n")
+
+        if start_str == "Y":
+            print("Input is valid!\n")
+            break
+        else:
+            print(f"Invalid input {start_str}, please try again.\n")
+
+    return print("Starting calculations...\n")
+
+
 def get_column_data():
     """
     Collects columns of data from project_data worksheet, collecting
@@ -92,7 +114,7 @@ def update_worksheet(data, worksheet):
     print(f"{worksheet} worksheet updated successfully\n")
 
 
-def create_data_frame(data):
+def create_data_frame():
     """
     Create DataFrame and convert to acceptable data type to allow for plotting.
     """
@@ -227,8 +249,7 @@ def main():
     """
     Run all program functions
     """
-    print("Welcome to the Economics Data Analysis Tool\n")
-    data_frame = create_data_frame(all_data)
+    start()
     column_data = get_column_data()
     total_sum = calculate_sum(column_data)
     update_worksheet(total_sum, "sum")
@@ -236,6 +257,7 @@ def main():
     update_worksheet(average, "average")
     estimate = calculate_estimate(average)
     update_worksheet(estimate, "estimate")
+    data_frame = create_data_frame()
     # y_plot = select_y_plot()
     # plot_type = select_plot_type()
     # plot_output(data_frame, y_plot, plot_type)
