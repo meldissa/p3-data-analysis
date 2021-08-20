@@ -15,20 +15,89 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('python_project_data')
 
 
-def get_data():
+def get_column_data():
     """
-    Access the google sheet with the data and receive all values.
+    Collects columns of data from project_data worksheet, collecting
+    all entries for each category and returns the data
+    as a list of lists.
     """
     project_data = SHEET.worksheet('project_data')
-    all_data = project_data.get_all_values()
 
-    return all_data
+    columns = []
+    for value in range(2, 8):
+        column = project_data.col_values(value)
+        columns.append(column[-11:])
+    
+    return columns
+
+
+def calculate_sum(data):
+    """
+    Calculate the total sum for each column type.
+    """
+    print("Calculating total sum data...")
+    total_sum_data = []
+
+    for column in data:
+        float_column = [float(num) for num in column]
+        total_sum = sum(float_column)
+        total_sum_data.append(round(total_sum, 2))
+
+    print("Total sum calculated!\n")
+
+    return total_sum_data
+
+
+def calculate_average(data):
+    """
+    Calculate the average mean for each column type.
+    """
+    print("Calculating average for data...")
+    average_data = []
+
+    for value in data:
+        average = value / 11
+        average_data.append(round(average, 2))
+
+    print("Average calculated!\n")
+
+    return average_data
+
+
+def calculate_estimate(data):
+    """
+    Calculate the estimate for 2021 for each column type.
+    Using the average figures, decrease by 15% to calculate estimate.
+    """
+    print("Calculating estimate for data...")
+    estimate_data = []
+
+    for value in data:
+        estimate = value * 0.85
+        estimate_data.append(round(estimate, 2))
+
+    print("Estimate calculated!\n")
+
+    return estimate_data
+
+
+def update_worksheet(data, worksheet):
+    """
+    Receives a list of floats to be inserted into a worksheet.
+    Update the relevant worksheet with the data provided.
+    """
+    print(f"Updating {worksheet} worksheet...")
+    worksheet_to_update = SHEET.worksheet(worksheet)
+    worksheet_to_update.append_row(data)
+    print(f"{worksheet} worksheet updated successfully\n")
 
 
 def create_data_frame(data):
     """
     Create DataFrame and convert to acceptable data type to allow for plotting.
     """
+    project_data = SHEET.worksheet('project_data')
+    all_data = project_data.get_all_values()
     headers = data.pop(0)
     df = pd.DataFrame(data, columns=headers)
     df = df.astype({
@@ -159,11 +228,17 @@ def main():
     Run all program functions
     """
     print("Welcome to the Economics Data Analysis Tool\n")
-    all_data = get_data()
     data_frame = create_data_frame(all_data)
-    y_plot = select_y_plot()
-    plot_type = select_plot_type()
-    plot_output(data_frame, y_plot, plot_type)
+    column_data = get_column_data()
+    total_sum = calculate_sum(column_data)
+    update_worksheet(total_sum, "sum")
+    average = calculate_average(total_sum)
+    update_worksheet(average, "average")
+    estimate = calculate_estimate(average)
+    update_worksheet(estimate, "estimate")
+    # y_plot = select_y_plot()
+    # plot_type = select_plot_type()
+    # plot_output(data_frame, y_plot, plot_type)
 
 
 main()
