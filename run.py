@@ -120,8 +120,8 @@ def create_data_frame():
     """
     project_data = SHEET.worksheet('project_data')
     all_data = project_data.get_all_values()
-    headers = data.pop(0)
-    df = pd.DataFrame(data, columns=headers)
+    headers = all_data.pop(0)
+    df = pd.DataFrame(all_data, columns=headers)
     df = df.astype({
         'Unemployment': 'float',
         'Exports': 'float',
@@ -138,29 +138,23 @@ def select_y_plot():
     """
     Get column name input from the user to plot for y axis.
     Run while loop to collect valid string data from user.
-    If multiple columns entered this must be separated by commas.
     The loop will repeat until data input from user is valid.
     """
     while True:
         print("Please enter the column name for the y-axis plot.")
         print("The input should be exactly the same as from the data sheet.")
-        print("To enter multiple columns, separate these by commas.")
-        print("Example: GDP,GDP per capita\n")
+        print("Example: GDP growth\n")
 
         y_plot_str = input("Enter y-plot column here: \n")
 
-        y_plot_column = y_plot_str.split(",")
-
-        if validate_y_plot(y_plot_column):
-            print("Input is valid!")
+        if validate_y_plot(y_plot_str):
+            print("Input is valid!\n")
             break
 
-    # print(y_plot_column)
-
-    return y_plot_column
+    return y_plot_str
 
 
-def validate_y_plot(values):
+def validate_y_plot(value):
     """
     List defined of correct column names as per data sheet.
     Variable defined to check if input from user list matches
@@ -177,11 +171,11 @@ def validate_y_plot(values):
         'Government expenditure',
         'Imports'
     ]
-    check_value = any(value in values for value in correct_values)
+    # check_value = any(value in values for value in correct_values)
     try:
-        if check_value is not True:
+        if value not in correct_values:
             raise ValueError(
-                f"Incorrect column name entered, you entered {values}"
+                f"Incorrect column name entered, you entered {value}"
             )
     except ValueError as e:
         print(f"Invalid input: {e}, please try again.\n")
@@ -210,7 +204,7 @@ def select_plot_type():
     return plot_type_str
 
 
-def validate_plot_type(values):
+def validate_plot_type(value):
     """
     List defined of correct plot types. Variable defined to check if
     input from user list matches to the correct values list.
@@ -220,9 +214,9 @@ def validate_plot_type(values):
     """
     correct_type = ['bar', 'scatter', 'line']
     try:
-        if values not in correct_type:
+        if value not in correct_type:
             raise ValueError(
-                f"Incorrect plot type, you entered {values}"
+                f"Incorrect plot type, you entered {value}"
             )
     except ValueError as e:
         print(f"Invalid input: {e}, please try again.\n")
@@ -231,15 +225,13 @@ def validate_plot_type(values):
     return True
 
 
-def plot_output(data, values, plot):
+def plot_output(data, value, plot):
     """
     Plot output as per user input.
     Image is saved of the plotted output.
     """
     print("Plotting data...")
-    plt.figure()
-    data.plot('Year', values, kind=plot)
-    print(data.plot('Year', values, kind=plot))
+    data.plot('Year', value, kind=plot)
     plt.savefig('assets/images/fig.png')
     plt.show()
     print("Data plotted successfully!")
@@ -258,9 +250,9 @@ def main():
     estimate = calculate_estimate(average)
     update_worksheet(estimate, "estimate")
     data_frame = create_data_frame()
-    # y_plot = select_y_plot()
-    # plot_type = select_plot_type()
-    # plot_output(data_frame, y_plot, plot_type)
+    y_plot = select_y_plot()
+    plot_type = select_plot_type()
+    plot_output(data_frame, y_plot, plot_type)
 
 
 main()
