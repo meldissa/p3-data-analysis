@@ -123,9 +123,8 @@ def create_data_frame():
     and convert to acceptable data type to allow for plotting.
     """
     project_data = SHEET.worksheet('project_data')
-    all_data = project_data.get_all_values()
-    headers = all_data.pop(0)
-    df = pd.DataFrame(all_data, columns=headers)
+    all_data = project_data.get_all_records()
+    df = pd.DataFrame(all_data)
     df = df.astype({
         'Unemployment': 'float',
         'Exports': 'float',
@@ -138,14 +137,28 @@ def create_data_frame():
     return df
 
 
-def append_data_frame(data, df):
+def append_data_frame(dataframe):
     """
     Create DataFrame for estimate 2021 data,
     which was previously calculated.
     Append both DataFrames to allow for plotting.
     """
-    df_est = pd.DataFrame(data)
-    df_append = df.append(df_est)
+    estimate_sheet = SHEET.worksheet('estimate')
+    est_data = estimate_sheet.get_all_records()
+    df_est = pd.DataFrame(est_data)
+    df_est = df_est.astype({
+        'Unemployment': 'float',
+        'Exports': 'float',
+        'GDP growth': 'float',
+        'GDP per capita growth': 'float',
+        'Government expenditure': 'float',
+        'Imports': 'float',
+    })
+
+    df_append = dataframe.append(df_est.tail(1))
+
+    print(df_est)
+    print(df_append)
 
     return df_append
 
@@ -266,7 +279,7 @@ def main():
     estimate = calculate_estimate(average)
     update_worksheet(estimate, "estimate")
     data_frame = create_data_frame()
-    append_df = append_data_frame(estimate, data_frame)
+    append_df = append_data_frame(data_frame)
     y_plot = select_y_plot()
     plot_type = select_plot_type()
     plot_output(append_df, y_plot, plot_type)
