@@ -17,9 +17,9 @@ SHEET = GSPREAD_CLIENT.open('python_project_data')
 
 def start():
     """
-    User provided with introduction and input to start calculation.
-    Try has if statement to check if user input is valid.
-    The except captures any incorrect input the user entered.
+    User is provided with introduction and input to start calculation.
+    The if statement is to check if user input is valid.
+    The else statement captures any incorrect input the user entered.
     """
     print("Welcome to the Economics Data Analysis Tool\n")
     while True:
@@ -53,7 +53,9 @@ def get_column_data():
 
 def calculate_sum(data):
     """
-    Calculate the total sum for each column type.
+    Calculates the total sum for each column type,
+    for the data obtained from the project_data worksheet.
+    Return the total sum data calculated.
     """
     print("Calculating total sum data...")
     total_sum_data = []
@@ -70,7 +72,9 @@ def calculate_sum(data):
 
 def calculate_average(data):
     """
-    Calculate the average mean for each column type.
+    Calculates the average for each column type using
+    the total sum previously calculated for project_data worksheet.
+    Return the average data calculated.
     """
     print("Calculating average for data...")
     average_data = []
@@ -88,8 +92,8 @@ def calculate_estimate(data):
     """
     Calculate the estimate for 2021 for each column type.
     Using the average figures, decrease by 15% to calculate estimate.
-    Insert 2021 at the beginning of the list for estimate_data,
-    and return the estimate_data.
+    Insert 2021 at the beginning of the estimate_data list,
+    and return the estimate_data calculated.
     """
     print("Calculating estimate for data...")
     estimate_data = []
@@ -115,28 +119,27 @@ def update_worksheet(data, worksheet):
     print(f"{worksheet} worksheet updated successfully\n")
 
 
-def create_data_frame():
+def create_data_frame(worksheet):
     """
-    Create DataFrame  for the project_data sheet.
+    Create DataFrame for the relevant worksheet.
+    Return the DataFrame created.
     """
-    project_data = SHEET.worksheet('project_data')
-    all_data = project_data.get_all_records()
+    print(f"Creating DataFrame for {worksheet} worksheet...")
+    worksheet_data = SHEET.worksheet(worksheet)
+    all_data = worksheet_data.get_all_records()
     df = pd.DataFrame(all_data)
+    print(f"DataFrame for {worksheet} worksheet created successfully!\n")
 
     return df
 
 
-def append_data_frame(dataframe):
+def append_data_frame(df1, df2):
     """
-    Create DataFrame for estimate 2021 data,
-    which was previously calculated.
-    Append both DataFrames to allow for plotting.
+    Append both DataFrames and convert data types
+    for the appended DataFrame to float to allow for plotting.
+    Return appended DataFrame.
     """
-    estimate_sheet = SHEET.worksheet('estimate')
-    est_data = estimate_sheet.get_all_records()
-    df_est = pd.DataFrame(est_data)
-
-    df_append = dataframe.append(df_est.tail(1))
+    df_append = df1.append(df2.tail(1))
     df_append = df_append.astype({
         'Unemployment': 'float',
         'Exports': 'float',
@@ -145,7 +148,7 @@ def append_data_frame(dataframe):
         'Government expenditure': 'float',
         'Imports': 'float',
     })
-
+    print(df_append)
     return df_append
 
 
@@ -154,6 +157,7 @@ def select_y_plot():
     Get column name input from the user to plot for y axis.
     Run while loop to collect valid string data from user.
     The loop will repeat until data input from user is valid.
+    Return the string value entered.
     """
     while True:
         print("Please enter the column name for the y-axis plot.")
@@ -172,8 +176,6 @@ def select_y_plot():
 def validate_y_plot(value):
     """
     List defined of correct column names as per data sheet.
-    Variable defined to check if input from user list matches
-    to the correct values list.
     Inside the try, checks if input from user is valid.
     Raises ValueError if input does not match to the column name
     from data sheet or if any other invalid input is entered.
@@ -221,8 +223,7 @@ def select_plot_type():
 
 def validate_plot_type(value):
     """
-    List defined of correct plot types. Variable defined to check if
-    input from user list matches to the correct values list.
+    List defined of correct plot types.
     Inside the try, checks if input from user is valid.
     Raises ValueError if input does not match to the correct type
     or if any other invalid input is entered.
@@ -242,7 +243,7 @@ def validate_plot_type(value):
 
 def plot_output(data, value, plot):
     """
-    Plot output as per user input.
+    Plots the output as per user input.
     Image is saved of the plotted output.
     """
     print("Plotting data...")
@@ -264,8 +265,9 @@ def main():
     update_worksheet(average, "average")
     estimate = calculate_estimate(average)
     update_worksheet(estimate, "estimate")
-    data_frame = create_data_frame()
-    append_df = append_data_frame(data_frame)
+    project_data_df = create_data_frame("project_data")
+    estimate_df = create_data_frame("estimate")
+    append_df = append_data_frame(project_data_df, estimate_df)
     y_plot = select_y_plot()
     plot_type = select_plot_type()
     plot_output(append_df, y_plot, plot_type)
