@@ -138,14 +138,16 @@ def create_data_frame():
     return df
 
 
-def create_data_frame_est(data):
+def append_data_frame(data, df):
     """
     Create DataFrame for estimate 2021 data,
     which was previously calculated.
+    Append both DataFrames to allow for plotting.
     """
     df_est = pd.DataFrame(data)
+    df_append = df.append(df_est)
 
-    return df_est
+    return df_append
 
 
 def select_y_plot():
@@ -264,10 +266,10 @@ def main():
     estimate = calculate_estimate(average)
     update_worksheet(estimate, "estimate")
     data_frame = create_data_frame()
-    est_df = create_data_frame_est(estimate)
+    append_df = append_data_frame(estimate, data_frame)
     y_plot = select_y_plot()
     plot_type = select_plot_type()
-    plot_output(data_frame, y_plot, plot_type)
+    plot_output(append_df, y_plot, plot_type)
 
 
 main()
