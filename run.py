@@ -251,6 +251,7 @@ def plot_output(data, value, kind):
     y = data[value]
     plt.xlabel("Year")
     plt.ylabel(value)
+    plt.plotsize(100, 30)
 
     if kind == 'bar':
         plt.bar(x, y)
