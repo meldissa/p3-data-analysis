@@ -90,9 +90,12 @@ def calculate_estimate(data):
     """
     Calculate the estimate for 2021 for each column type.
     Using the average figures, decrease by 15% to calculate estimate.
+    Insert 2021 at the beginning of the list for estimate_data,
+    and return the estimate_data.
     """
     print("Calculating estimate for data...")
     estimate_data = []
+    estimate_data.insert(0, 2021)
 
     for value in data:
         estimate = value * 0.85
@@ -116,7 +119,8 @@ def update_worksheet(data, worksheet):
 
 def create_data_frame():
     """
-    Create DataFrame and convert to acceptable data type to allow for plotting.
+    Create DataFrame  for the project_data sheet,
+    and convert to acceptable data type to allow for plotting.
     """
     project_data = SHEET.worksheet('project_data')
     all_data = project_data.get_all_values()
@@ -132,6 +136,16 @@ def create_data_frame():
     })
 
     return df
+
+
+def create_data_frame_est(data):
+    """
+    Create DataFrame for estimate 2021 data,
+    which was previously calculated.
+    """
+    df_est = pd.DataFrame(data)
+
+    return df_est
 
 
 def select_y_plot():
@@ -250,6 +264,7 @@ def main():
     estimate = calculate_estimate(average)
     update_worksheet(estimate, "estimate")
     data_frame = create_data_frame()
+    est_df = create_data_frame_est(estimate)
     y_plot = select_y_plot()
     plot_type = select_plot_type()
     plot_output(data_frame, y_plot, plot_type)
