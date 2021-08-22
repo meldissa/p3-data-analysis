@@ -148,7 +148,7 @@ def append_data_frame(df1, df2):
         'Government expenditure': 'float',
         'Imports': 'float',
     })
-    print(df_append)
+
     return df_append
 
 
