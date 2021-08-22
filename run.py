@@ -1,7 +1,7 @@
 import gspread
 from google.oauth2.service_account import Credentials
 import pandas as pd
-import matplotlib.pyplot as plt
+import plotext as plt
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -241,16 +241,26 @@ def validate_plot_type(value):
     return True
 
 
-def plot_output(data, value, plot):
+def plot_output(data, value, kind):
     """
-    Plots the output as per user input.
-    Image is saved of the plotted output.
+    Plots the output as per user input on the terminal.
+    Image is also saved of the plotted output.
     """
-    print("Plotting data...")
-    data.plot('Year', value, kind=plot)
-    plt.savefig('assets/images/fig.png')
-    plt.show()
-    print("Data plotted successfully!")
+    print("Plotting data...\n")
+    x = data['Year']
+    y = data[value]
+    plt.xlabel("Year")
+    plt.ylabel(value)
+
+    if kind == 'bar':
+        plt.bar(x, y)
+    elif kind == 'scatter':
+        plt.scatter(x, y)
+    elif kind == 'line':
+        plt.plot(x, y)
+
+    print("Data plotted successfully!\n")
+    return plt.show()
 
 
 def main():
