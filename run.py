@@ -22,7 +22,6 @@ def start():
     The except captures any incorrect input the user entered.
     """
     print("Welcome to the Economics Data Analysis Tool\n")
-    
     while True:
         print("Press Y to start\n")
 
@@ -49,7 +48,6 @@ def get_column_data():
     for value in range(2, 8):
         column = project_data.col_values(value)
         columns.append(column[-11:])
-    
     return columns
 
 
@@ -119,20 +117,11 @@ def update_worksheet(data, worksheet):
 
 def create_data_frame():
     """
-    Create DataFrame  for the project_data sheet,
-    and convert to acceptable data type to allow for plotting.
+    Create DataFrame  for the project_data sheet.
     """
     project_data = SHEET.worksheet('project_data')
     all_data = project_data.get_all_records()
     df = pd.DataFrame(all_data)
-    df = df.astype({
-        'Unemployment': 'float',
-        'Exports': 'float',
-        'GDP growth': 'float',
-        'GDP per capita growth': 'float',
-        'Government expenditure': 'float',
-        'Imports': 'float',
-    })
 
     return df
 
@@ -146,7 +135,9 @@ def append_data_frame(dataframe):
     estimate_sheet = SHEET.worksheet('estimate')
     est_data = estimate_sheet.get_all_records()
     df_est = pd.DataFrame(est_data)
-    df_est = df_est.astype({
+
+    df_append = dataframe.append(df_est.tail(1))
+    df_append = df_append.astype({
         'Unemployment': 'float',
         'Exports': 'float',
         'GDP growth': 'float',
@@ -154,11 +145,6 @@ def append_data_frame(dataframe):
         'Government expenditure': 'float',
         'Imports': 'float',
     })
-
-    df_append = dataframe.append(df_est.tail(1))
-
-    print(df_est)
-    print(df_append)
 
     return df_append
 
@@ -200,7 +186,7 @@ def validate_y_plot(value):
         'Government expenditure',
         'Imports'
     ]
-    # check_value = any(value in values for value in correct_values)
+
     try:
         if value not in correct_values:
             raise ValueError(
