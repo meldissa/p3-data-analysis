@@ -284,7 +284,8 @@ def main():
     y_plot = select_y_plot()
     plot_type = select_plot_type()
     plot_output(append_df, y_plot, plot_type)
-    print("\nThank you for using the Economics Data Analysis Tool!\n")
 
 
 main()
+print("\nThank you for using the Economics Data Analysis Tool!\n")
+print("Press RUN PROGRAM to start again.\n")
