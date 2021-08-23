@@ -244,14 +244,13 @@ def validate_plot_type(value):
 def plot_output(data, value, kind):
     """
     Plots the output as per user input on the terminal.
-    Image is also saved of the plotted output.
+    Plotted output is returned in the terminal.
     """
     print("Plotting data...\n")
     x = data['Year']
     y = data[value]
     plt.xlabel("Year")
     plt.ylabel(value)
-    plt.plotsize(100, 30)
 
     if kind == 'bar':
         plt.bar(x, y)
