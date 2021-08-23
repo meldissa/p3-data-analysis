@@ -21,7 +21,7 @@ def start():
     The if statement is to check if user input is valid.
     The else statement captures any incorrect input the user entered.
     """
-    print("Welcome to the Economics Data Analysis Tool\n")
+    print("Welcome to the Economics Data Analysis Tool!\n")
     while True:
         print("Press Y to start\n")
 
@@ -208,7 +208,7 @@ def select_plot_type():
     The loop will repeat until data input from user is valid.
     """
     while True:
-        print("Please enter the plot type from the options.")
+        print("Please enter the plot type from the options:")
         print("bar, scatter, line")
         print("Example: bar\n")
 
@@ -244,14 +244,15 @@ def validate_plot_type(value):
 def plot_output(data, value, kind):
     """
     Plots the output as per user input on the terminal.
-    Plotted output is returned in the terminal.
+    Returns confirmation to the user that output has been plotted,
+    and displays DataFrame for selected column consisting the data.
     """
     print("Plotting data...\n")
     x = data['Year']
     y = data[value]
     plt.xlabel("Year")
     plt.ylabel(value)
-    plt.plotsize(30, 10)
+    output_selection = data[['Year', value]]
 
     if kind == 'bar':
         plt.bar(x, y)
@@ -260,8 +261,9 @@ def plot_output(data, value, kind):
     elif kind == 'line':
         plt.plot(x, y)
 
-    print("Data plotted successfully!\n")
-    return plt.show()
+    print(f"Data plotted successfully for {value} as {kind} plot!\n")
+    print(f"Data selection for x-axis Year and y-axis {value}:\n")
+    return print(output_selection)
 
 
 def main():
@@ -282,6 +284,7 @@ def main():
     y_plot = select_y_plot()
     plot_type = select_plot_type()
     plot_output(append_df, y_plot, plot_type)
+    print("\nThank you for using the Economics Data Analysis Tool!\n")
 
 
 main()
