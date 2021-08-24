@@ -192,6 +192,21 @@ Although this is a web application, it is visible on mobile and tablets, even th
 
 ### Known Issues and Resolutions <a name="issues"></a>
 
+* During testing an issue was identified within the append_data_frame(df1, df2) function. The purpose of this function is to append the two DataFrames created for the 'project_data' and 'estimate' worksheet. However, as the user is able to re-run the application to calculate the data multiple times if they wish to do so, this results in the 'estimate' worksheet having multiple rows of data. Therefore, when the DataFrames are appended, this can result in the year 2021 for the estimate having multiple entries within the appended DataFrame, when only the most recent row of data calculated is required. To resolve this issue, the code was updated from df_append = df1.append(df2) to the following df_append = df1.append(df2.tail(1)). Utilising the pandas library, the addition of tail(1) ensured that when appending the two DataFrames, for the 'estimate' DataFrame, only the last row of data was returned which was the most recently calculated. Therefore, this would no longer pose the issue where multiple rows for the estimate data is being returned if the user had previously run the application multiple times to calculate this.
+
+* During testing an issue was identified within the plot_output(data, value, kind) function. The purpose of this function is to plot the output to the terminal based on the user's previous inputs for the y-plot column and plot type using the following code plt.show(). This posed no issues when the code was run in GitPod, as the output was plotted in the terminal and the user was able to view this. However, once the project was deployed to Heroku and tested again using the template provided, the code for plt.show() did not run as expected and resulted in an error displayed in the terminal. Due to the plotext terminal plotting not being supported with the template used for deployment and additional time constraints this issue could not be fully resolved. To overcome the issue, the code was re-worked for this function. Instead of using plt.show() to display the plotted output in the terminal, instead the user is now displayed with a message to confirm that the data plot was successful based on their selection for the y-plot column and the plot type. In addition, the user is returned with the selected column from the DataFrame used for the plot to show the data used for plotting. 
+
+An example below of what the plotted output looks like in the terminal once this code is run in GitPod:
+
+![](docs/images/plot-example.png)
+
+Below is the error message displayed in Heroku for the deployed project using the template running this code:
+
+![](docs/images/plot-error.png)
+
+Alternative fix to issue code to display to user once data is plotted:
+
+![](docs/images/plot-amended.png)
 
 ## Deployment <a name="deployment"></a>
 
