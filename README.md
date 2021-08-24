@@ -169,6 +169,44 @@ I have also utilised the following frameworks, libraries, and tools:
 
 ### User Stories Testing <a name="user-testing"></a>
 
+The following user stories have been achieved:
+
+* I want to import data from Google Sheets.
+* I want to provide an application which allows user to import data from Google Sheets.
+
+Once the user has initiated the calculations via the correct input, the functions will begin to run in order to calculate the sum, average and estimate as well as update the relevant worksheets for each calculation on the Google Sheets document. The user is displayed with a message in the terminal to confirm that the calculations have been completed and that the worksheets have been updated.
+
+Screenshot below of the print statement displayed in the terminal when the application is running to complete the calculations and update the worksheets:
+
+![](docs/images/testing-3.png)
+
+Screenshots below of the output produced and exported to the Google Sheets document for the relevant worksheet:
+
+__Sum__
+
+![](docs/images/testing-3.1.png)
+
+__Average__
+
+![](docs/images/testing-3.2.png)
+
+__Estimate__
+
+![](docs/images/testing-3.3.png)
+
+The following user stories have been achieved:
+
+* I want to calculate the total sum for each column of data and update the worksheet.
+* I want to calculate the average for each column of data and update the worksheet.
+* I want to calculate the estimate for each column of data for the next year and update the worksheet.
+* I want to provide an application which allows for data calculation for imported data (sum, average, estimate).
+
+The following user stories have been achieved:
+
+* I want to plot the data across all available 'Years' for the selected column inclusive of the estimate data and choose the plot type.
+* I want to view the underlying data for the plotted output.
+* I want to provide an application which allows user to plot data based on their selection.
+* I want to provide an application which allows user to view the data selected for the plotting.
 
 ### Validation Testing <a name="validation-testing"></a>
 
