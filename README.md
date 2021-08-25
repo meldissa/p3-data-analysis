@@ -169,6 +169,22 @@ I have also utilised the following frameworks, libraries, and tools:
 
 ### User Stories Testing <a name="user-testing"></a>
 
+The application is built using APIs to access Google Sheets data that the user is interested in analysing.
+
+The data is accessed from the following [link](https://docs.google.com/spreadsheets/d/1q9xDlLLc2jBNZncPqXOUpQ4JlAWxshT-2HE1O2b6yNc/edit?usp=sharing).
+
+Screenshot of the data sample located on the Google worksheet for project_data:
+
+![](docs/images/testing-1.png)
+
+Once the application is run for the first time, the user is presented with an introductory message to the Economics Data Analysis Tool. The user is then prompted to confirm if they wish to start the application by entering input 'Y'. With the addition of the input option, the user can control when they want to begin the application and continue with the calculation of data rather than the application running straigh away upon the user accessing this. Once the correct input has been entered, the user is presented with confirmation that the input entered is valid, and the application proceeds to run and the data is imported from the Google worksheet.
+
+![](docs/images/testing-1.2.png)
+
+If the user enters an incorrect input, this is also captured in the code whereby the user will be displayed with an error message to state that the input entered is not valid. The input will be presented once more to allow the user the re-enter the input correctly. The loop will continue to run until the user has entered the correct input from which the loop is exited and the user is then able to proceed.
+
+![](docs/images/testing-1.3.png)
+
 The following user stories have been achieved:
 
 * I want to import data from Google Sheets.
@@ -200,6 +216,20 @@ The following user stories have been achieved:
 * I want to calculate the average for each column of data and update the worksheet.
 * I want to calculate the estimate for each column of data for the next year and update the worksheet.
 * I want to provide an application which allows for data calculation for imported data (sum, average, estimate).
+
+Following this the two DataFrames are created using the project_data and estimate worksheets, this is displayed in the terminal as confirmation to the user that the action has taken place. The DataFrames are then combined to allow the user to plot data for Years 2010 to 2021 for the selected column. The user is next presented with the option to select a column for the y-plot, and provided with further guidance that the input of the column should be exactly the same as the name on the worksheet where the data is imported from. An example is also provided to the user of the input. Once the user has entered the input correctly, a confirmation statement is received to state to the user that the input is valid. This then proceeds onto the next section where the user is once again presented with the input option to select the plot type. The terminal also displays the available options the user can choose from and an exmaple of what the input should look like. Once the user has entered the correct input, a message is then displayed to confirm that the input is valid.
+
+![](docs/images/testing-4.png)
+
+If the user enters the incorrect input, at either of the two stages to select the y-plot column and/or the plot type, this is accounted for in the code with a try and except statement. An error message is displayed in the terminal for the incorrect input and the loop is continued to display the question again to allow the user to enter the input correctly which will break out the loop and continue with the application. 
+
+![](docs/images/testing-4.1.png)
+
+![](docs/images/testing-4.2.png)
+
+The final stage of the application is plotting the data once the user has entered valid input. The user is presented with a message in the terminal to state that the data is being plotted, and once this is completed, the user is presented with confirmation to state that this is completed. An additional message is displayed to show that the data is plotted based on the user's previous slection for the y-plot column and the plot type and the DataFrame columns are returned in the terminal to display to the user the underlying data used for plotting. The application ends with a goodbye message to the user, and an option to re-run the application once again if the user wishes to do so.
+
+![](docs/images/testing-4.3.png)
 
 The following user stories have been achieved:
 
