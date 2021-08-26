@@ -23,7 +23,7 @@ def start():
     """
     print("Welcome to the Economics Data Analysis Tool!\n")
     while True:
-        print("Press Y to start\n")
+        print("Enter Y to start\n")
 
         start_str = input("Enter here: \n")
 
@@ -245,7 +245,7 @@ def plot_output(data, value, kind):
     """
     Plots the output as per user input on the terminal.
     Returns confirmation to the user that output has been plotted,
-    and displays DataFrame for selected column consisting the data.
+    and displays DataFrame for selected column consisting of the data.
     """
     print("Plotting data...\n")
     x = data['Year']
