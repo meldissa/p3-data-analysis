@@ -246,6 +246,8 @@ To test the Python code, I used the __PEP8 Online Validation Service__:
 
 No issues were detected with the code.
 
+Please note that on the GitPod workspace, the run.py file has an extra row 383 after row 382. However, when this is committed and pushed to the repository the extra row is not accounted for on the run.py file and the last row recorded is 382. Therefore, when running the validator tool using the repository code without the extra blank row at the end, this displays a warning message 'no newline at the end of file'. Using the repository code, the extra row needs to be added manually for the validator as pushing the code always removes this row automatically. This then returns the code with no error messages.
+
 This website was tested on the following browsers:
 
 * Google Chrome
