@@ -212,7 +212,14 @@ def select_y_plot():
     """
     while True:
         print("Please enter the column name for the y-axis plot.")
-        print("The input should be exactly the same as from the data sheet.")
+        print("Choose one from the following options:")
+        print(
+            "Unemployment\n"
+            "Exports\n"
+            "GDP growth\n"
+            "GDP per capita growth\n"
+            "Government expenditure\n"
+            "Imports\n")
         print("Example: GDP growth\n")
 
         y_plot_str = input("Enter y-plot column here: \n")
@@ -275,8 +282,12 @@ def select_plot_type():
         String value returned from user input
     """
     while True:
-        print("Please enter the plot type from the options:")
-        print("bar, scatter, line")
+        print("Please enter the plot type.")
+        print("Choose one from the following options:")
+        print(
+            "bar\n"
+            "scatter\n"
+            "line\n")
         print("Example: bar\n")
 
         plot_type_str = input("Enter plot type here: \n")
